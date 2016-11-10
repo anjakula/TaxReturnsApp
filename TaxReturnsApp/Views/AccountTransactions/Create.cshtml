@@ -1,0 +1,111 @@
+﻿@model TaxReturns.Models.AccountTransaction
+@using System.Data;
+@{
+    ViewBag.Title = "Create Transaction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="bs-header">
+    <ul class="breadcrumb">
+        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+        <li class="active">Create Transaction</></li>
+    </ul>
+</div>
+<br />
+<div class="panel panel-default panel-table">
+    <div class="panel-heading">
+        <strong>@ViewBag.Title</strong>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("Create", "AccountTransactions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.Label("Excel/CSV File", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" id="FileUpload1" name="FileUpload1" />
+                        <br />
+                        <input type="submit" value="Upload" class="btn btn-success" />
+                    </div>
+                </div>
+
+                <div class="form-horizontal">
+                    @if (ViewBag.Count != null)
+                    { @ViewBag.Count }
+                    <hr />
+                    <table id="">
+
+                        @if (ViewBag.Data != null)
+                        {
+                            <thead>
+                                 @foreach (DataColumn column in (ViewBag.Data as System.Data.DataTable).Columns)
+                                {
+                                <th>@column.ColumnName.ToUpper()</th>
+                                }
+                                </thead>
+                            if ((ViewBag.Data as System.Data.DataTable).Rows.Count > 0)
+                            {
+                                foreach (DataRow dr in (ViewBag.Data as System.Data.DataTable).Rows)
+                                {
+
+                                    <tr>
+
+                                        @foreach (DataColumn column in (ViewBag.Data as System.Data.DataTable).Columns)
+                                        {
+                                            <td data-title='@column.ColumnName'>
+
+                                                @dr[column].ToString()
+                                            </td>
+                                        }
+
+                                    </tr>
+
+                                }
+                                <tr><td>Please correct the above errors in the file and re upload..</td><td></td><td></td><td></td></tr>
+
+                            }
+                            else
+                            {
+                                int count = (ViewBag.Data as System.Data.DataTable).Columns.Count;
+                                <tr>
+
+                                    <td colspan='@count' style="color:red;">
+
+                                        All records inserted successfully!!
+
+                                    </td>
+                                </tr>
+
+                            }
+
+                        }
+                        else
+                        {
+                            if (ViewBag.Error != null)
+                            {
+                                <tr>
+                                    <td style="color:red;">
+
+                                        @(ViewBag.Error != null ? ViewBag.Error.ToString() : "")
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+
+        <div>
+            <br />    @Html.ActionLink((HttpUtility.HtmlDecode(" &laquo;") + " Back to List"), "Index", "AccountTransactions", null, new { @class = "btn btn-primary btn-large" })
+        </div>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+
+
+    </div>
+</div>

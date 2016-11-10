@@ -1,0 +1,34 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>KPMG Tax Returns</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Welcome to KPMG </h2>
+        <p>
+            KPMG Tax Returns is a sample application that processes account transaction data to calculate tax figures 
+            for a client tax return. 
+            <br />
+            
+            <b> Used technologies:</b><br />
+            Entity Framework 6 <br />
+            ASP.NET MVC 5.
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>Create New Transaction</h2>
+        <p>You can upload the transactions data be using below Link on The Tax returns application</p>
+        <p>
+        
+        @Html.ActionLink("Create Transactions", "Create", "AccountTransactions") &raquo;</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Transactions List </h2>
+        <p>You can search/view/edit the transactions list by going to below Link.</p>
+        <p>@Html.ActionLink("Get Transactions", "Index", "AccountTransactions") &raquo;</a></p>
+    </div>
+</div>
